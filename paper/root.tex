@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{acro_preprint,times}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsfonts, amsmath, amssymb, bbm}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{afterpage}
+\usepackage{needspace}
+\usepackage{placeins}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{url}
+\definecolor{linkblue}{HTML}{2878B5}
+\hypersetup{
+  colorlinks=true,
+  citecolor=linkblue,
+  linkcolor=linkblue,
+  urlcolor=linkblue,
+  pdftitle={ACRO: Actor--Critic Rollout Orchestration},
+  pdfsubject={Preprint},
+  pdfauthor={Junhoo Lee, Seungyeon Kim, Baekseung Kim, Minkyu Kim, Suhyun Jeon, Jimyeong Kim, Nojun Kwak}
+}
+\usepackage[capitalise]{cleveref}
+
+
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{6}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\floatpagefraction}{0.8}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+
+
+\makeatletter
+\newcommand{\finishwrap}[1][1]{
+  \par
+  \ifnum\c@WF@wrappedlines>#1\relax
+    \@tempdima=\baselineskip
+    \multiply\@tempdima by \c@WF@wrappedlines
+    \advance\@tempdima by -#1\baselineskip
+    \vskip\@tempdima
+  \fi
+  \WFclear
+}
+\makeatother
+
+\newtheorem{proposition}{Proposition}
+
+
+\title{ACRO: Actor--Critic Rollout Orchestration}
+
+\input{authors}
+
+\begin{document}
+
+\maketitle
+
+\input{sec/abstract}
+
+\input{sec/introduction}
+\input{sec/related_work}
+\input{sec/preliminaries}
+\input{sec/recap}
+\input{sec/experiments}
+\input{sec/results}
+\input{sec/conclusion}
+\clearpage
+\input{sec/ai_statement}
+\input{sec/ethics_statement}
+\input{sec/reproducibility_statement}
+
+\bibliographystyle{acro_preprint}
+\setlength{\bibsep}{4pt plus 1pt minus 1pt}
+\bibliography{references}
+
+\clearpage
+\appendix
+\input{sec/details}
+\FloatBarrier
+\input{sec/ablation_details}
+\clearpage
+\input{sec/budget_details}
+
+\end{document}

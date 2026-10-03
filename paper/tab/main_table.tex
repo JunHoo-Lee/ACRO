@@ -1,0 +1,27 @@
+\begin{table}[!t]
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\caption{Task success rate (\%) in simulation. All methods run the same base policy under the benchmark's standard physical step limit, including recovery motion: 300 steps on SimplerEnv Bridge and each task's registered limit on RoboCasa. Overall pools all trials of a benchmark. Best result per row in bold. $\dagger$Adapted baselines; see \cref{sec:exp_setup}.}
+\label{tab:main-results}
+\begin{tabular}{@{}llrcccc@{}}
+\toprule
+ & & & \multicolumn{3}{c}{Baselines} & \\
+\cmidrule(lr){4-6}
+Policy & Task & $N$ & Base & RoboMonkey$^\dagger$ & CycleVLA$^\dagger$ & ACRO \\
+\midrule
+GR00T N1.7 & Carrot on Plate    & 60 & 50.0 & 31.7 & 48.3 & \textbf{68.3} \\
+{\footnotesize SimplerEnv Bridge} & Eggplant in Basket & 60 & 36.7 & 50.0 & \textbf{66.7} & 51.7 \\
+           & Spoon on Towel     & 60 & \textbf{93.3} & 90.0 & \textbf{93.3} & \textbf{93.3} \\
+           & Stack Cube         & 60 & 18.3 & 18.3 & 13.3 & \textbf{26.7} \\
+\cmidrule(l){2-7}
+           & Overall            & 240 & 49.6 & 47.5 & 55.4 & \textbf{60.0} \\
+\midrule
+$\pi_{0.5}$ & Open/Close/Slide        & 250 & 64.4 & 66.8 & 65.6 & \textbf{76.0} \\
+{\footnotesize RoboCasa} & Pick-and-Place & 250 & 64.0 & \textbf{68.0} & 56.0 & 65.2 \\
+            & Control Operation       & 100 & 43.0 & 52.0 & 40.0 & \textbf{55.0} \\
+\cmidrule(l){2-7}
+            & Overall                 & 600 & 60.7 & 64.8 & 57.3 & \textbf{68.0} \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,19 @@
+\begin{wraptable}{r}{0.49\linewidth}
+\vspace{-4pt}
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{\textbf{ACRO improves on scheduled rewinds.} All 600 RoboCasa trials at $H$; returns and return steps are trial means.}
+\label{tab:periodic-rewind}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Method & Success (\%) & Returns & Steps \\
+\midrule
+Base VLA & 60.7 & 0 & 0 \\
+Periodic & 59.5 & 1.04 & 92.7 \\
+\rowcolor{linkblue!12}
+ACRO & 68.0 & 1.06 & 46.3 \\
+\bottomrule
+\end{tabular}
+\end{wraptable}

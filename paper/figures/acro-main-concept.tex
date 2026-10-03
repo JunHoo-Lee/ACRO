@@ -1,0 +1,6 @@
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/acro-main-concept.pdf}
+  \caption{\textbf{Actor--Critic rollout orchestration.} The orchestration advantage $A^\pi_{\mathcal O}(s,a;s')=V^\pi(s')-Q^\pi(s,a)$ compares task-success probabilities after re-entry and after executing the current proposal, within the available time. Once intervention is activated, the Actor selects the recorded candidate with the highest estimated advantage; the current $Q$ is fixed during this comparison. Trajectory Retraction shortens the return path, and the VLA resumes from a fresh observation.}
+  \label{fig:acro-overview}
+\end{figure}

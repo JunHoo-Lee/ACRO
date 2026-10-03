@@ -1,0 +1,3 @@
+\section{Conclusion}
+
+We introduced ACRO, an Actor--Critic rollout orchestration layer that improves task completion by controlling when to intervene and where a fixed VLA resumes execution. The Critic guides recovery toward a promising continuation, and Trajectory Retraction makes the physical return efficient by using the visited path. Across two VLA backbones, simulation benchmarks, and real-robot manipulation, ACRO improves success under the same physical budget, including return motion. Additional execution time enables further successes through renewed attempts. These findings show that evaluating and redirecting an ongoing execution can make better use of a learned policy's capabilities, connecting execution-time orchestration to more reliable task completion.

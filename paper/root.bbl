@@ -1,0 +1,264 @@
+\begin{thebibliography}{22}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Beetz et~al.(2010)Beetz, M{\"o}senlechner, and Tenorth]{beetz2010cram}
+Michael Beetz, Lorenz M{\"o}senlechner, and Moritz Tenorth.
+\newblock {CRAM}---a cognitive robot abstract machine for everyday manipulation
+  in human environments.
+\newblock In \emph{IEEE/RSJ International Conference on Intelligent Robots and
+  Systems}, 2010.
+\newblock \doi{10.1109/IROS.2010.5650146}.
+\newblock URL \url{https://www.open-ease.org/papers/beetz10cram.pdf}.
+
+\bibitem[Black et~al.(2025{\natexlab{a}})Black, Brown, Darpinian, Dhabalia,
+  Driess, Esmail, Equi, Finn, Fusai, Galliker, Ghosh, Groom, Hausman, Ichter,
+  Jakubczak, Jones, Ke, LeBlanc, Levine, Li-Bell, Mothukuri, Nair, Pertsch,
+  Ren, Shi, Smith, Springenberg, Stachowicz, Tanner, Vuong, Walke, Walling,
+  Wang, Yu, and Zhilinsky]{black2025pi05}
+Kevin Black, Noah Brown, James Darpinian, Karan Dhabalia, Danny Driess, Adnan
+  Esmail, Michael~Robert Equi, Chelsea Finn, Niccolo Fusai, Manuel~Y. Galliker,
+  Dibya Ghosh, Lachy Groom, Karol Hausman, Brian Ichter, Szymon Jakubczak, Tim
+  Jones, Liyiming Ke, Devin LeBlanc, Sergey Levine, Adrian Li-Bell, Mohith
+  Mothukuri, Suraj Nair, Karl Pertsch, Allen~Z. Ren, Lucy~Xiaoyang Shi, Laura
+  Smith, Jost~Tobias Springenberg, Kyle Stachowicz, James Tanner, Quan Vuong,
+  Homer Walke, Anna Walling, Haohuan Wang, Lili Yu, and Ury Zhilinsky.
+\newblock {$\pi_{0.5}$}: A vision-language-action model with open-world
+  generalization.
+\newblock In \emph{Proceedings of The 9th Conference on Robot Learning}, volume
+  305 of \emph{Proceedings of Machine Learning Research}, pp.\  17--40. PMLR,
+  2025{\natexlab{a}}.
+\newblock URL \url{https://proceedings.mlr.press/v305/black25a.html}.
+
+\bibitem[Black et~al.(2025{\natexlab{b}})Black, Brown, Driess, Esmail, Equi,
+  Finn, Fusai, Groom, Hausman, Ichter, Jakubczak, Jones, Ke, Levine, Li-Bell,
+  Mothukuri, Nair, Pertsch, Shi, Smith, Tanner, Vuong, Walling, Wang, and
+  Zhilinsky]{black2025pi0}
+Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael~Robert Equi,
+  Chelsea Finn, Niccolo Fusai, Lachy Groom, Karol Hausman, Brian Ichter, Szymon
+  Jakubczak, Tim Jones, Liyiming Ke, Sergey Levine, Adrian Li-Bell, Mohith
+  Mothukuri, Suraj Nair, Karl Pertsch, Lucy~Xiaoyang Shi, Laura Smith, James
+  Tanner, Quan Vuong, Anna Walling, Haohuan Wang, and Ury Zhilinsky.
+\newblock {$\pi_0$: A Vision-Language-Action Flow Model for General Robot
+  Control}.
+\newblock In \emph{Proceedings of Robotics: Science and Systems}, LosAngeles,
+  CA, USA, 2025{\natexlab{b}}.
+\newblock \doi{10.15607/RSS.2025.XXI.010}.
+
+\bibitem[Galanti et~al.(2026)Galanti, Shah, and Dao]{galanti2026pigey}
+Liane Galanti, Dhruv Shah, and Tri Dao.
+\newblock Addressing the orchestration gap in generalist robots via physical
+  agency, 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.21725}.
+
+\bibitem[Gu et~al.(2025)Gu, Ju, Sun, Gilitschenski, Nishimura, Itkina, and
+  Shkurti]{gu2025safe}
+Qiao Gu, Yuanliang Ju, Shengxiang Sun, Igor Gilitschenski, Haruki Nishimura,
+  Masha Itkina, and Florian Shkurti.
+\newblock {SAFE}: Multitask failure detection for vision-language-action
+  models.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~38, pp.\  40041--40076. Curran Associates, Inc., 2025.
+\newblock \doi{10.52202/085713-1337}.
+\newblock URL
+  \url{https://proceedings.neurips.cc/paper_files/paper/2025/file/392d0d05e2f514063e6ce6f8b370834c-Paper-Conference.pdf}.
+
+\bibitem[Huang et~al.(2023)Huang, Xia, Xiao, Chan, Liang, Florence, Zeng,
+  Tompson, Mordatch, Chebotar, Sermanet, Jackson, Brown, Luu, Levine, Hausman,
+  and Ichter]{huang2023innermonologue}
+Wenlong Huang, Fei Xia, Ted Xiao, Harris Chan, Jacky Liang, Pete Florence, Andy
+  Zeng, Jonathan Tompson, Igor Mordatch, Yevgen Chebotar, Pierre Sermanet,
+  Tomas Jackson, Noah Brown, Linda Luu, Sergey Levine, Karol Hausman, and Brian
+  Ichter.
+\newblock Inner monologue: Embodied reasoning through planning with language
+  models.
+\newblock In \emph{Proceedings of The 6th Conference on Robot Learning}, volume
+  205 of \emph{Proceedings of Machine Learning Research}, pp.\  1769--1782.
+  PMLR, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v205/huang23c.html}.
+
+\bibitem[Ichter et~al.(2023)Ichter, Brohan, Chebotar, Finn, Hausman, Herzog,
+  Ho, Ibarz, Irpan, Jang, Julian, Kalashnikov, Levine, Lu, Parada, Rao,
+  Sermanet, Toshev, Vanhoucke, Xia, Xiao, Xu, Yan, Brown, Ahn, Cortes, Sievers,
+  Tan, Xu, Reyes, Rettinghouse, Quiambao, Pastor, Luu, Lee, Kuang, Jesmonth,
+  Joshi, Jeffrey, Ruano, Hsu, Gopalakrishnan, David, Zeng, and
+  Fu]{ichter2023saycan}
+Brian Ichter, Anthony Brohan, Yevgen Chebotar, Chelsea Finn, Karol Hausman,
+  Alexander Herzog, Daniel Ho, Julian Ibarz, Alex Irpan, Eric Jang, Ryan
+  Julian, Dmitry Kalashnikov, Sergey Levine, Yao Lu, Carolina Parada, Kanishka
+  Rao, Pierre Sermanet, Alexander~T Toshev, Vincent Vanhoucke, Fei Xia, Ted
+  Xiao, Peng Xu, Mengyuan Yan, Noah Brown, Michael Ahn, Omar Cortes, Nicolas
+  Sievers, Clayton Tan, Sichun Xu, Diego Reyes, Jarek Rettinghouse, Jornell
+  Quiambao, Peter Pastor, Linda Luu, Kuang-Huei Lee, Yuheng Kuang, Sally
+  Jesmonth, Nikhil~J. Joshi, Kyle Jeffrey, Rosario~Jauregui Ruano, Jasmine Hsu,
+  Keerthana Gopalakrishnan, Byron David, Andy Zeng, and Chuyuan~Kelly Fu.
+\newblock Do as i can, not as i say: Grounding language in robotic affordances.
+\newblock In \emph{Proceedings of The 6th Conference on Robot Learning}, volume
+  205 of \emph{Proceedings of Machine Learning Research}, pp.\  287--318. PMLR,
+  2023.
+\newblock URL \url{https://proceedings.mlr.press/v205/ichter23a.html}.
+
+\bibitem[Kaelbling \& Lozano-P{\'e}rez(2011)Kaelbling and
+  Lozano-P{\'e}rez]{kaelbling2011now}
+Leslie~Pack Kaelbling and Tom{\'a}s Lozano-P{\'e}rez.
+\newblock Hierarchical task and motion planning in the now.
+\newblock In \emph{IEEE International Conference on Robotics and Automation},
+  2011.
+\newblock URL
+  \url{https://people.csail.mit.edu/tlp/pdf/2011/hpnICRA11Final.pdf}.
+
+\bibitem[Kim et~al.(2025)Kim, Pertsch, Karamcheti, Xiao, Balakrishna, Nair,
+  Rafailov, Foster, Sanketi, Vuong, Kollar, Burchfiel, Tedrake, Sadigh, Levine,
+  Liang, and Finn]{kim2025openvla}
+Moo~Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna,
+  Suraj Nair, Rafael Rafailov, Ethan~P Foster, Pannag~R Sanketi, Quan Vuong,
+  Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine,
+  Percy Liang, and Chelsea Finn.
+\newblock {OpenVLA}: An open-source vision-language-action model.
+\newblock In \emph{Proceedings of The 8th Conference on Robot Learning}, volume
+  270 of \emph{Proceedings of Machine Learning Research}, pp.\  2679--2713.
+  PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v270/kim25c.html}.
+
+\bibitem[Kvamme \& Borgan(2021)Kvamme and Borgan]{kvamme2021survival}
+H{\aa}vard Kvamme and {\O}rnulf Borgan.
+\newblock Continuous and discrete-time survival prediction with neural
+  networks.
+\newblock \emph{Lifetime Data Analysis}, 27\penalty0 (4):\penalty0 710--736,
+  2021.
+\newblock \doi{10.1007/s10985-021-09532-6}.
+\newblock URL
+  \url{https://link.springer.com/article/10.1007/s10985-021-09532-6}.
+
+\bibitem[Kwok et~al.(2025)Kwok, Agia, Sinha, Foutter, Li, Stoica, Mirhoseini,
+  and Pavone]{kwok2025robomonkey}
+Jacky Kwok, Christopher Agia, Rohan Sinha, Matt Foutter, Shulu Li, Ion Stoica,
+  Azalia Mirhoseini, and Marco Pavone.
+\newblock {RoboMonkey}: Scaling test-time sampling and verification for
+  vision-language-action models, 2025.
+\newblock URL \url{https://arxiv.org/abs/2506.17811}.
+
+\bibitem[Kwok et~al.(2026)Kwok, Zhang, Xu, Liu, Mirhoseini, Finn, and
+  Pavone]{kwok2026cover}
+Jacky Kwok, Xilun Zhang, Mengdi Xu, Yuejiang Liu, Azalia Mirhoseini, Chelsea
+  Finn, and Marco Pavone.
+\newblock Scaling verification can be more effective than scaling policy
+  learning for vision-language-action alignment.
+\newblock In \emph{Computer Vision -- ECCV 2026}, volume 17071 of \emph{Lecture
+  Notes in Computer Science}, pp.\  37--55. Springer, 2026.
+\newblock \doi{10.1007/978-3-032-37016-7_3}.
+\newblock URL
+  \url{https://link.springer.com/chapter/10.1007/978-3-032-37016-7_3}.
+
+\bibitem[Li et~al.(2025)Li, Hsu, Gu, Mees, Pertsch, Walke, Fu, Lunawat, Sieh,
+  Kirmani, Levine, Wu, Finn, Su, Vuong, and Xiao]{li2025simpler}
+Xuanlin Li, Kyle Hsu, Jiayuan Gu, Oier Mees, Karl Pertsch, Homer~Rich Walke,
+  Chuyuan Fu, Ishikaa Lunawat, Isabel Sieh, Sean Kirmani, Sergey Levine, Jiajun
+  Wu, Chelsea Finn, Hao Su, Quan Vuong, and Ted Xiao.
+\newblock Evaluating real-world robot manipulation policies in simulation.
+\newblock In \emph{Proceedings of The 8th Conference on Robot Learning}, volume
+  270 of \emph{Proceedings of Machine Learning Research}, pp.\  3705--3728.
+  PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v270/li25c.html}.
+
+\bibitem[Ma et~al.(2026)Ma, Lu, Yang, Liu, Xu, Byrne, Havoutis, Trigoni, and
+  Markham]{ma2026cyclevla}
+Chenyang Ma, Kai Lu, Guangyu Yang, Jiuming Liu, Shitong Xu, Bill Byrne, Ioannis
+  Havoutis, Niki Trigoni, and Andrew Markham.
+\newblock {CycleVLA}: Proactive self-correcting vision-language-action models
+  via subtask backtracking and minimum bayes risk decoding, 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.02295}.
+
+\bibitem[Nakamoto et~al.(2025)Nakamoto, Mees, Kumar, and
+  Levine]{nakamoto2025steering}
+Mitsuhiko Nakamoto, Oier Mees, Aviral Kumar, and Sergey Levine.
+\newblock Steering your generalists: Improving robotic foundation models via
+  value guidance.
+\newblock In \emph{Proceedings of the 8th Conference on Robot Learning}, volume
+  270 of \emph{Proceedings of Machine Learning Research}, pp.\  4996--5013.
+  PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v270/nakamoto25a.html}.
+
+\bibitem[Nasiriany et~al.(2024)Nasiriany, Maddukuri, Zhang, Parikh, Lo, Joshi,
+  Mandlekar, and Zhu]{nasiriany2024robocasa}
+Soroush Nasiriany, Abhiram Maddukuri, Lance Zhang, Adeet Parikh, Aaron Lo,
+  Abhishek Joshi, Ajay Mandlekar, and Yuke Zhu.
+\newblock {RoboCasa: Large-Scale Simulation of Household Tasks for Generalist
+  Robots}.
+\newblock In \emph{Proceedings of Robotics: Science and Systems}, Delft,
+  Netherlands, 2024.
+\newblock \doi{10.15607/RSS.2024.XX.050}.
+
+\bibitem[{NVIDIA}(2026)]{nvidia2026groot17}
+{NVIDIA}.
+\newblock {Isaac GR00T N1.7}.
+\newblock Software and model release, 2026.
+\newblock URL \url{https://github.com/NVIDIA/Isaac-GR00T}.
+\newblock Accessed September 25, 2026.
+
+\bibitem[R\"{o}mer et~al.(2025)R\"{o}mer, Kobras, Worbis, and
+  Schoellig]{romer2025fiper}
+Ralf R\"{o}mer, Adrian Kobras, Luca Worbis, and Angela Schoellig.
+\newblock Failure prediction at runtime for generative robot policies.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~38, pp.\  7631--7670. Curran Associates, Inc., 2025.
+\newblock \doi{10.52202/085713-0260}.
+\newblock URL
+  \url{https://proceedings.neurips.cc/paper_files/paper/2025/file/0b7cb3b8cc44e652761245537027db44-Paper-Conference.pdf}.
+
+\bibitem[Sutton \& Barto(2018)Sutton and Barto]{sutton2018reinforcement}
+Richard~S. Sutton and Andrew~G. Barto.
+\newblock \emph{Reinforcement Learning: An Introduction}.
+\newblock MIT Press, 2 edition, 2018.
+\newblock URL
+  \url{https://mitpress.mit.edu/9780262039246/reinforcement-learning/}.
+
+\bibitem[Volpe et~al.(2001)Volpe, Nesnas, Estlin, Mutz, Petras, and
+  Das]{volpe2001claraty}
+Richard Volpe, Issa Nesnas, Tara Estlin, Darren Mutz, Richard Petras, and Hari
+  Das.
+\newblock The {CLARAty} architecture for robotic autonomy.
+\newblock In \emph{IEEE Aerospace Conference Proceedings}, 2001.
+\newblock URL
+  \url{https://www-robotics.jpl.nasa.gov/media/documents/01_volpe_claraty_aerospace.pdf}.
+
+\bibitem[Wang et~al.(2026)Wang, Zhang, Yan, Kompella, and
+  Liu]{wang2026autohorizon}
+Haoxuan Wang, Gengyu Zhang, Yan Yan, Ramana~Rao Kompella, and Gaowen Liu.
+\newblock {VLA} knows its limits: Adaptive execution horizons for robot
+  policies.
+\newblock In \emph{Computer Vision -- ECCV 2026}, volume 17064 of \emph{Lecture
+  Notes in Computer Science}, pp.\  607--623. Springer, 2026.
+\newblock \doi{10.1007/978-3-032-37196-6_33}.
+\newblock URL
+  \url{https://link.springer.com/chapter/10.1007/978-3-032-37196-6_33}.
+
+\bibitem[Zitkovich et~al.(2023)Zitkovich, Yu, Xu, Xu, Xiao, Xia, Wu, Wohlhart,
+  Welker, Wahid, Vuong, Vanhoucke, Tran, Soricut, Singh, Singh, Sermanet,
+  Sanketi, Salazar, Ryoo, Reymann, Rao, Pertsch, Mordatch, Michalewski, Lu,
+  Levine, Lee, Lee, Leal, Kuang, Kalashnikov, Julian, Joshi, Irpan, Ichter,
+  Hsu, Herzog, Hausman, Gopalakrishnan, Fu, Florence, Finn, Dubey, Driess,
+  Ding, Choromanski, Chen, Chebotar, Carbajal, Brown, Brohan, Arenas, and
+  Han]{zitkovich2023rt2}
+Brianna Zitkovich, Tianhe Yu, Sichun Xu, Peng Xu, Ted Xiao, Fei Xia, Jialin Wu,
+  Paul Wohlhart, Stefan Welker, Ayzaan Wahid, Quan Vuong, Vincent Vanhoucke,
+  Huong Tran, Radu Soricut, Anikait Singh, Jaspiar Singh, Pierre Sermanet,
+  Pannag~R. Sanketi, Grecia Salazar, Michael~S. Ryoo, Krista Reymann, Kanishka
+  Rao, Karl Pertsch, Igor Mordatch, Henryk Michalewski, Yao Lu, Sergey Levine,
+  Lisa Lee, Tsang-Wei~Edward Lee, Isabel Leal, Yuheng Kuang, Dmitry
+  Kalashnikov, Ryan Julian, Nikhil~J. Joshi, Alex Irpan, Brian Ichter, Jasmine
+  Hsu, Alexander Herzog, Karol Hausman, Keerthana Gopalakrishnan, Chuyuan Fu,
+  Pete Florence, Chelsea Finn, Kumar~Avinava Dubey, Danny Driess, Tianli Ding,
+  Krzysztof~Marcin Choromanski, Xi~Chen, Yevgen Chebotar, Justice Carbajal,
+  Noah Brown, Anthony Brohan, Montserrat~Gonzalez Arenas, and Kehang Han.
+\newblock {RT-2}: Vision-language-action models transfer web knowledge to
+  robotic control.
+\newblock In \emph{Proceedings of The 7th Conference on Robot Learning}, volume
+  229 of \emph{Proceedings of Machine Learning Research}, pp.\  2165--2183.
+  PMLR, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v229/zitkovich23a.html}.
+
+\end{thebibliography}

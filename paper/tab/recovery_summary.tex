@@ -1,0 +1,22 @@
+\begin{wraptable}{r}{0.53\linewidth}
+\vspace{-4pt}
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\caption{\textbf{Gained successes exceed losses.} RoboCasa trials at $H$, relative to Base. Policy-step means use the 46 shared successes after ACRO's first alarm.}
+\label{tab:recovery-summary}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Outcome changes} & \multicolumn{2}{c}{Mean rollout steps} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Category & Gained & Lost & Base & ACRO \\
+\midrule
+Open/close & 33 & 4 & 362.6 & 296.1 \\
+Pick/place & 17 & 14 & 387.0 & 345.5 \\
+Control & 20 & 8 & 139.3 & 157.7 \\
+\midrule
+\textbf{Overall} & \textbf{70} & \textbf{26} & \textbf{327.9} & \textbf{287.3} \\
+\bottomrule
+\end{tabular}
+\end{wraptable}

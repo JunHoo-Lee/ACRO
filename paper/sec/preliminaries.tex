@@ -1,0 +1,33 @@
+\section{Method}
+
+
+
+
+
+
+
+\subsection{Problem Formulation}
+
+\paragraph{Goal} Our goal is to improve a VLA's task success through orchestration. To be useful in real robotic deployments, orchestration must account for both the time required to intervene and the physical feasibility of the intervention. Meaning, interventions must be physically executable and timely: assessing the ongoing execution, selecting a re-entry target, and moving the robot must leave sufficient time for task completion. We therefore seek interventions that enable more promising policy continuations within the available time.
+
+\paragraph{Objective}
+Our goal can be viewed as finding an intervention whose resulting
+continuation offers an advantage over executing the currently
+proposed action. Let $s$ denote the available execution context,
+including the observation history, task instruction, and elapsed
+time, and let $a\sim\pi(\cdot\mid s)$ denote the action proposed by
+the VLA. We define $Q^\pi(s,a)$ as the probability of task completion
+within the time limit after executing $a$ and then following $\pi$,
+and $V^\pi(s)$ as the corresponding probability when $\pi$ selects
+its continuation from $s$, following the standard state- and action-value definitions~\citep{sutton2018reinforcement}. For an intervention that reaches $s'$, including the elapsed time
+at policy resumption, we define its advantage over executing $a$ as
+\begin{equation}
+A^\pi_{\mathcal O}(s,a;s')
+=
+V^\pi(s')-Q^\pi(s,a).
+\label{eq:orchastration-advantage}
+\end{equation}
+Here, $\mathcal O$ denotes an orchestration decision that changes where the VLA resumes execution.
+
+\paragraph{Challenges}
+However, realizing this advantage at test time is not straightforward. We must estimate whether continuing with the proposed action is likely to succeed. If the prospects are low, we need to find a state $s'$ that offers a better continuation. Searching more broadly may uncover better targets, but takes time and can lead to states where value estimates are less reliable. We must then move the robot toward the selected target and leave enough time to complete the task. The scene may also change during the move, affecting the continuation we expected.

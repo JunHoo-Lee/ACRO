@@ -1,0 +1,30 @@
+\begin{algorithm}[t]
+\caption{Actor--Critic Rollout Orchestration (ACRO)}
+\label{alg:acro}
+\small
+\begingroup
+\algrenewcommand{\algorithmiccomment}[1]{\hfill\textcolor{linkblue}{$\triangleright$ #1}}
+\begin{algorithmic}
+\State Initialize trajectory history $\mathcal B$, Q history $\mathcal Q$, and elapsed steps $n\gets0$
+\While{$n<T$ and the episode has not terminated}
+    \State Observe $s$ from the reached scene; sample $a\sim\pi(\cdot\mid s)$
+    \State $q\gets\widehat Q(s,a)$, $v\gets\widehat V(s)$ \Comment{Evaluate continuations}
+    \State Store $(s,v)$ and the robot pose in $\mathcal B$; append $q$ to $\mathcal Q$
+    \If{$g(\mathcal Q)>\tau$ and re-entry is available}
+        \State $\hat s\gets\operatorname*{arg\,max}_{s'\in\mathcal R}\widehat V(s')$
+            \Comment{Select an eligible recorded target}
+        \State $\mathcal P\gets$ recorded path from the current pose toward $\hat s$
+        \State Shortcut $\mathcal P$ within distance $\rho$ of visited positions \Comment{Trajectory Retraction}
+        \State Follow the shortened path; let $\Delta n$ be the physical steps used
+    \Else
+        \State Execute $a$ until the next query; let $\Delta n$ be the steps used
+    \EndIf
+    \State Update the active trajectory $\mathcal B$; $n\gets n+\Delta n$
+\EndWhile
+\end{algorithmic}
+\endgroup
+\footnotesize
+The budget $T$ counts all physical steps; motion stops at termination or budget exhaustion.
+Re-entry availability includes a nonempty
+eligible set $\mathcal R$ and the intervention conditions in Appendix~\ref{app:trigger}--\ref{app:retraction}.
+\end{algorithm}

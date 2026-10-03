@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ACRO: Actor–Critic Rollout Orchestration. A recovery layer that turns the capabilities of fixed vision-language-action policies into more successful robot executions.">
+  <meta name="theme-color" content="#111111">
+  <meta property="og:title" content="ACRO: Actor–Critic Rollout Orchestration">
+  <meta property="og:description" content="Learn when to intervene, where to return, and how to give a fixed VLA a more promising continuation.">
+  <meta property="og:type" content="website">
+  <title>ACRO: Actor–Critic Rollout Orchestration</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip" href="#article">Skip to content</a>
+  <div class="page">
+    <header class="hero">
+      <div class="masthead"><a href="#top" class="wordmark"><span class="logo" aria-hidden="true">A</span> ACRO</a><span>OCTOBER 2026</span></div>
+      <div class="hero-body">
+        <p class="eyebrow">ROBOT LEARNING · ROLLOUT ORCHESTRATION</p>
+        <h1>ACRO: Actor–Critic<br>Rollout Orchestration</h1>
+        <p class="dek">Give a fixed VLA a more promising continuation.</p>
+        <div id="authors" class="authors"><a href="https://junhoo-lee.com">Junhoo Lee</a><sup>2</sup>, <a href="https://seungyeon.me">Seungyeon Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Baekseung_Kim1">Baekseung Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Minkyu_Kim11">Minkyu Kim</a><sup>1</sup>, Suhyun Jeon<sup>1</sup>, <a href="https://wlaud1001.github.io/">Jimyeong Kim</a><sup>1</sup>, <a href="https://mipal.snu.ac.kr/">Nojun Kwak</a><sup>1</sup><div class="affiliations"><sup>1</sup> Seoul National University &nbsp; <sup>2</sup> KAIST</div></div>
+        <div class="resource-links">
+          <a href="https://github.com/JunHoo-Lee/ACRO">Code</a>
+          <a href="assets/paper/acro-preprint.pdf" id="paper-link">Paper</a>
+          <a href="assets/paper/acro-preprint-source.zip">LaTeX source</a>
+          <a href="#results">Results</a>
+          <a href="#cite">Citation</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="replay" aria-labelledby="replay-heading">
+      <div class="panel-heading"><span id="replay-heading">A RECOVERY, STEP BY STEP</span><span>OPEN STAND MIXER HEAD</span></div>
+      <div class="replay-grid">
+        <div class="replay-scene">
+          <div class="small-label">01 / RECORDED EXECUTION</div>
+          <video id="rollout-video" muted playsinline preload="metadata" poster="assets/images/mixer-start.png" aria-label="Recorded ACRO execution opening a stand mixer head">
+            <source src="assets/video/mixer-recovery.mp4" type="video/mp4">
+          </video>
+          <img id="terminal-frame" src="assets/images/mixer-success.png" alt="Terminal success frame showing the opened stand mixer head" hidden>
+          <div class="video-controls"><button id="play-video" type="button">Play rollout</button><span>20 fps playback</span></div>
+        </div>
+        <div class="replay-decision">
+          <div class="small-label">02 / ESTIMATE AND INTERVENE</div>
+          <div class="phase"><span id="phase-label">Continue</span><strong><span id="step-label">0</span><small> / 224 steps</small></strong></div>
+          <p id="phase-copy">The frozen policy approaches the mixer. ACRO estimates the prospects of continuing with its proposed actions.</p>
+          <svg id="q-chart" viewBox="0 0 430 180" role="img" aria-label="Estimated continuation success over the recorded rollout">
+            <rect x="249" y="14" width="86" height="127" class="return-region"/>
+            <line x1="26" y1="141" x2="412" y2="141" class="axis"/>
+            <line x1="26" y1="14" x2="26" y2="141" class="axis"/>
+            <text x="7" y="21">1</text><text x="7" y="145">0</text>
+            <text x="26" y="164">0</text><text x="235" y="164">130</text><text x="327" y="164">180</text><text x="395" y="164">224</text>
+            <text x="35" y="30" class="chart-title">Q · continuation success</text>
+            <g id="q-lines"></g><line id="q-cursor" x1="26" y1="14" x2="26" y2="141" class="cursor"/>
+          </svg>
+          <div class="legend"><span><i class="blue"></i>Policy execution</span><span><i class="red"></i>Physical return</span></div>
+          <label for="replay-step" class="small-label scrub-label">EXPLORE THE ROLLOUT</label>
+          <input id="replay-step" type="range" min="0" max="224" value="0" aria-label="Physical step of the recovery rollout">
+          <div class="jump-controls"><button type="button" data-step="130">Intervene · 130</button><button type="button" data-step="180">Resume · 180</button><button type="button" data-step="224">Success · 224</button></div>
+        </div>
+        <div class="replay-outcome">
+          <div class="small-label">03 / RETURN AND RESUME</div>
+          <img src="assets/images/mixer-resume.png" alt="High-resolution replay frame at the configuration where VLA execution resumes" width="768" height="768">
+          <p><strong>A fresh observation.<br>The same VLA.</strong></p>
+          <p>The robot returns along its visited path, then makes a new approach and opens the mixer head.</p>
+          <dl><div><dt>Return motion</dt><dd>50 steps</dd></div><div><dt>After resuming</dt><dd>44 steps to success</dd></div></dl>
+        </div>
+      </div>
+      <p class="replay-caption">An ACRO execution from the qualitative example in the paper. The video shows the recorded camera view; the right panel shows a high-resolution replay of the same actions. Return motion is included in the physical step count.</p>
+    </section>
+
+    <div class="article-layout">
+      <nav class="section-nav" aria-label="Sections">
+        <a href="#why"><span>1</span>Why orchestrate rollouts?</a>
+        <a href="#method"><span>2</span>Actor–Critic orchestration</a>
+        <a href="#pipeline"><span>3</span>The execution loop</a>
+        <a href="#results"><span>4</span>Results</a>
+        <a href="#takeaway"><span>5</span>More useful attempts</a>
+      </nav>
+      <main id="article">
+        <div class="opening">
+          <p class="lead">When should a robot keep going—and when should it try a different approach?</p>
+          <p>A vision-language-action policy can succeed from some configurations and struggle from others. During an execution, continuing the current attempt is only one way to use that policy. A robot can also return to a useful point along its path and start a new continuation.</p>
+          <p><strong>ACRO</strong> makes this decision for a fixed VLA. It estimates success prospects, chooses a promising re-entry state, and physically returns the robot there. The same policy then resumes from a fresh observation.</p>
+          <p>Across SimplerEnv, RoboCasa, and real-robot manipulation, ACRO improves task success under the same physical execution budget, including every return step.</p>
+        </div>
+
+        <section id="why" class="article-section">
+          <div class="section-title"><span>1.</span><h2>Why orchestrate rollouts?</h2></div>
+          <p>The outcome of one attempt does not exhaust a policy’s capabilities. An approach can miss a handle, lose a useful contact, or settle into a repetitive motion. A return to a previously visited configuration can give the policy another opportunity to act.</p>
+          <figure class="figure-box"><img src="assets/figures/recovery.svg" alt="Stand mixer recovery sequence: declining continuation estimates, physical retraction, renewed approach and success" loading="lazy"><figcaption>ACRO intervenes as continuation prospects decline, returns to an earlier configuration, and resumes the fixed policy. The mixer head opens after the new approach.</figcaption></figure>
+          <p>A useful intervention needs three things: a better continuation, a feasible return, and enough remaining time to finish. ACRO brings these decisions into the execution loop.</p>
+        </section>
+
+        <section id="method" class="article-section">
+          <div class="section-title"><span>2.</span><h2>Actor–Critic orchestration</h2></div>
+          <p>A Critic learned from uninterrupted policy rollouts estimates the chances of task completion. It helps decide when to intervene and where the policy should resume.</p>
+          <figure class="figure-box"><img src="assets/figures/method.svg" alt="ACRO method: assess a proposed action with Q, evaluate historical re-entry states with V, retract along the visited path, and resume the VLA" loading="lazy"><figcaption>The Critic evaluates continuation and re-entry prospects. The Actor carries out the return and gives the VLA a new starting observation.</figcaption></figure>
+          <h3>Estimating success</h3>
+          <p>The <strong>Q estimate</strong> assesses the current state and proposed action chunk. A calibrated rule uses recent Q estimates to activate an intervention. The <strong>V estimate</strong> ranks candidate states along the executed trajectory and selects a promising re-entry target.</p>
+          <h3>Trajectory Retraction</h3>
+          <p>The robot follows a shortcut inside a tube around positions it has already visited. This removes detours while keeping the return in explored space. Objects retain their current state, and the movement consumes part of the execution budget.</p>
+          <details><summary>How the Critic is learned</summary><div class="detail-body"><p>The Critic uses features from the frozen VLA and the robot’s proprioceptive state. A GRU summarizes recent observations. Joint Q and V heads predict success with a piecewise-exponential survival model, so training can use both completed and censored rollouts.</p><p>The intervention threshold is calibrated on held-out rollouts. The public code provides the selected Critic, its loss, the Q-history gate, and the recovery loop.</p></div></details>
+        </section>
+
+        <section id="pipeline" class="article-section">
+          <div class="section-title"><span>3.</span><h2>The execution loop</h2></div>
+          <div class="pipeline" aria-label="Four stages of ACRO"><div><span>01</span><h3>Propose</h3><p>The fixed VLA proposes an action chunk from the current observation.</p></div><div><span>02</span><h3>Assess</h3><p>The Critic estimates continuation prospects and monitors recent Q values.</p></div><div><span>03</span><h3>Return</h3><p>If intervention activates, select a historical state and physically retract.</p></div><div><span>04</span><h3>Resume</h3><p>Clear the action queue and query the same VLA from the reached observation.</p></div></div>
+          <p>Every policy action and return action counts toward the same physical step limit. The process can repeat while the execution has time remaining.</p>
+          <figure class="figure-box"><img src="assets/figures/real-robot.png" alt="Franka Panda performing pick and place, cube stacking, and button pressing" loading="lazy"><figcaption>Real-robot evaluation on pick and place, cube stacking, and button pressing.</figcaption></figure>
+        </section>
+
+        <section id="results" class="article-section">
+          <div class="section-title"><span>4.</span><h2>Results</h2></div>
+          <p>ACRO is evaluated with GR00T N1.7 and π<sub>0.5</sub>. Within each setting, the base policy stays fixed and all methods receive the same physical execution budget, including recovery motion.</p>
+          <div class="highlights"><div><span>SIMPLERENV</span><strong>+10.4<small> pp</small></strong><p>49.6% → 60.0%</p></div><div><span>ROBOCASA</span><strong>+7.3<small> pp</small></strong><p>60.7% → 68.0%</p></div><div><span>REAL ROBOT</span><strong>+21.7<small> pp</small></strong><p>43.3% → 65.0%</p></div></div>
+          <div class="result-switch" role="tablist" aria-label="Evaluation environment"><button role="tab" id="tab-simpler" aria-selected="true" aria-controls="result-panel" data-result="simpler">SimplerEnv</button><button role="tab" id="tab-robocasa" aria-selected="false" aria-controls="result-panel" data-result="robocasa" tabindex="-1">RoboCasa</button><button role="tab" id="tab-real" aria-selected="false" aria-controls="result-panel" data-result="real" tabindex="-1">Real robot</button></div>
+          <div id="result-panel" role="tabpanel" aria-labelledby="tab-simpler" tabindex="0">
+            <div class="result-header"><h3 id="result-title">GR00T N1.7 · SimplerEnv Bridge</h3><span>TASK SUCCESS (%)</span></div>
+            <div class="table-scroll"><table id="result-table"><caption class="sr-only">Task success rates</caption><thead></thead><tbody></tbody></table></div>
+            <p class="table-note" id="result-note"></p>
+          </div>
+          <h3>Critic-guided recovery</h3>
+          <p>On RoboCasa, ACRO reaches <strong>68.0%</strong> success, compared with <strong>60.7%</strong> for the base policy and <strong>59.5%</strong> for periodic rewinds. ACRO and periodic rewinds initiate similar numbers of returns, while ACRO spends about half as many physical steps returning.</p>
+          <div class="table-scroll"><table class="strategy-table"><caption class="sr-only">Recovery strategy comparison on RoboCasa</caption><thead><tr><th>Strategy</th><th>Success</th><th>Returns / trial</th><th>Return steps / trial</th></tr></thead><tbody><tr><th>Base VLA</th><td>60.7%</td><td>—</td><td>—</td></tr><tr><th>Periodic rewind</th><td>59.5%</td><td>1.04</td><td>92.7</td></tr><tr class="ours"><th>ACRO</th><td>68.0%</td><td>1.06</td><td>46.3</td></tr></tbody></table></div>
+          <h3>Scaling with execution time</h3>
+          <p>Extra execution time gives ACRO opportunities for renewed attempts. Over the final 200 steps of the SimplerEnv budget, ACRO adds 43 completed trials while the base policy adds 25.</p>
+          <figure class="figure-box budget-figure"><img src="assets/figures/budget.svg" alt="Task completion grows with physical step budget for ACRO and Base VLA on SimplerEnv" loading="lazy"><figcaption>Success as a function of physical execution steps. Every retraction step is included.</figcaption></figure>
+        </section>
+
+        <section id="takeaway" class="article-section">
+          <div class="section-title"><span>5.</span><h2>More useful attempts from the same policy</h2></div>
+          <p>ACRO treats rollout execution as a sequence of decisions about continuation and intervention. Learned success estimates and physical re-entry turn the capabilities of a fixed VLA into more completed tasks.</p>
+          <p>The public package contains the core Critic, intervention gate, retraction planner, and orchestration loop, with a small executable example. The paper provides the evaluation setup and full results.</p>
+          <div class="closing-links"><a href="https://github.com/JunHoo-Lee/ACRO">Explore the code</a><a href="assets/paper/acro-preprint.pdf" class="paper-resource">Read the paper</a></div>
+        </section>
+
+        <section id="cite" class="citation-section"><h2>Cite this work</h2><div class="citation-box"><div><span>BIBTEX</span><button id="copy-citation" type="button">Copy</button></div><pre id="bibtex">@misc{acro2026,
+  title = {{ACRO}: Actor--Critic Rollout Orchestration},
+  author = {Lee, Junhoo and Kim, Seungyeon and Kim, Baekseung and Kim, Minkyu and Jeon, Suhyun and Kim, Jimyeong and Kwak, Nojun},
+  year = {2026},
+  url = {https://junhoo-lee.github.io/ACRO/}
+}</pre></div><p id="copy-status" class="sr-only" role="status"></p></section>
+      </main>
+    </div>
+    <footer><strong>ACRO</strong><span>Actor–Critic Rollout Orchestration</span><a href="#top">Back to top</a></footer>
+  </div>
+</body>
+</html>

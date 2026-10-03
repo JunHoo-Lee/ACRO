@@ -1,0 +1,107 @@
+\subsection{ACRO}
+\label{sec:acro}
+\paragraph{Actor--Critic Orchestration.}
+We implement the objective in Eq.~\ref{eq:orchastration-advantage}
+through an Actor--Critic structure. The Critic evaluates the
+success prospects of policy continuations, and the Actor uses
+these evaluations to select and execute a repositioning motion.
+Directly evaluating the orchestration advantage requires searching
+for alternative targets and assessing their continuation values.
+Doing so at every policy step would spend time even when the
+current execution is likely to succeed. We therefore adopt a
+sparse Actor--Critic structure: a Q-based assessment identifies
+when to activate the Actor, which then searches for a promising
+target using V. Once activated, the current action value is fixed,
+so maximizing V over candidate targets also maximizes their
+estimated orchestration advantage.
+
+\paragraph{Evaluating Continuations.}
+Repositioning and retries consume time that could otherwise be
+used to complete the task. A useful continuation must therefore
+offer a high probability of success within the available time.
+We learn Q and V from rollouts of the deployed VLA by modeling
+the time to task completion. Q conditions on the observation
+history and proposed action, while V uses the observation history
+alone. Both predict completion hazard rates, yielding success
+probabilities over a forecast horizon $h$:
+\begin{equation}
+\widehat V(s)=1-e^{-\int_0^h\lambda_V(u\mid s)\,du},
+\qquad
+\widehat Q(s,a)=1-e^{-\int_0^h\lambda_Q(u\mid s,a)\,du}.
+\label{eq:time-to-success-values}
+\end{equation}
+Here, $\lambda_V$ and $\lambda_Q$ are the predicted completion
+rates conditional on the task not yet being completed. We
+parameterize them as piecewise-constant rates over time intervals~\citep{kvamme2021survival}.
+The forecast horizon $h$ is the interval over which the Critic predicts success; the episode budget counts all physical steps taken by the policy and by retraction.
+
+These predictions must account for both observed successes and
+executions that end before success is observed. A successful
+rollout provides a completion time; an incomplete rollout indicates
+only that completion did not occur during the observed interval.
+We incorporate both through the censored time-to-success loss
+\begin{equation}
+\ell_{\mathrm{surv}}(\lambda;d,\delta)
+=\int_0^d\lambda(u)\,du-\delta\log\lambda(d),
+\label{eq:survival-loss}
+\end{equation}
+where $d$ is the duration from a policy decision to completion or
+observation cutoff, and $\delta$ indicates whether completion
+was observed. We apply this loss to both Q and V.
+
+The value of a proposed action should also agree with the
+continuation it produces. For an action interval of duration
+$\Delta t$ without termination, the finite-horizon Bellman relation gives~\citep{sutton2018reinforcement}
+\begin{equation}
+Q_h^\pi(s,a)
+=\mathbb E\!\left[V_{h-\Delta t}^\pi(s')\mid s,a\right].
+\label{eq:qv-consistency}
+\end{equation}
+We encourage this consistency by additionally training Q toward
+a stop-gradient V prediction at the next observed state, reducing
+the forecast horizon by the elapsed action duration. Observed
+success in the final action interval supplies a target of one.
+Censored endpoints without a subsequent observation are excluded
+from this additional bootstrap term.
+
+Before target search, the alternative continuation value is
+unavailable. We therefore use Q to predict whether the current
+execution will fail within the task horizon. With the Critic
+fixed, we train a logistic classifier on recent Q estimates
+using rollout-level failure labels. Its prediction determines
+when to activate the Actor. This provides a proxy for identifying
+opportunities for positive advantage while reserving target
+search and physical repositioning for selected moments.
+
+\paragraph{Value-Guided Repositioning.}
+The Actor must find a promising target and reach it with enough
+time left for task completion. Searching more broadly may reveal
+better targets, but increases search time and exposes selection
+to value errors at unfamiliar states. We therefore use configurations
+recorded along the active execution trajectory as candidates.
+These records provide observations and value estimates for target
+selection, together with a path for guiding physical movement.
+
+Among the eligible recorded contexts $\mathcal R$, the Actor
+selects the target with the highest estimated V. The recorded
+value serves as a proxy for the prospects of resuming from its
+associated robot configuration. To reduce movement time, Trajectory
+Retraction shortcuts the recorded path while keeping each segment
+near the visited positions. The target-selection rule and shortcut
+condition are
+\begin{equation}
+\hat s\in\operatorname*{arg\,max}_{s'\in\mathcal R}\widehat V(s'),
+\qquad
+\max_{p\in[p_i,p_j]}\operatorname{dist}(p,\mathcal P)\le\rho.
+\label{eq:value-guided-repositioning}
+\end{equation}
+Here, $\mathcal P$ is the set of recorded end-effector positions
+along the selected trajectory segment, and $\rho$ is the allowed
+deviation. After target selection, we greedily choose the farthest
+waypoint toward the target whose connecting segment satisfies
+the condition, approximated by sampling points along the segment.
+The Actor follows the resulting path, and the VLA receives a
+fresh observation of the reached state to generate a new
+continuation. Subsequent execution updates the active trajectory
+for later orchestration decisions. Algorithm~\ref{alg:acro} summarizes the online orchestration loop.
+\input{figures/acro_algorithm}

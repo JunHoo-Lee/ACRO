@@ -1,0 +1,17 @@
+\begin{table}[!t]
+\centering
+\small
+\caption{Critic architecture. The MLP and KAN read only the latest query; the GRU and Transformer read the last eight. Success rate (\%), averaged over three tasks.}
+\label{tab:critic-arch}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Critic & Params & Q AUROC & Success \\
+\midrule
+\rowcolor{linkblue!12}
+GRU (ours)  & 0.44M & 0.897 & 71.3 \\
+MLP         & 0.35M & 0.886 & 71.1 \\
+KAN         & 1.17M & 0.939 & 77.6 \\
+Transformer & 0.62M & 0.915 & 73.6 \\
+\bottomrule
+\end{tabular}
+\end{table}

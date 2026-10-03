@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "Please cite the ACRO preprint when using this work."
+title: "ACRO: Actor–Critic Rollout Orchestration"
+type: software
+version: 0.1.0
+date-released: 2026-10-04
+url: "https://junhoo-lee.github.io/ACRO/"
+repository-code: "https://github.com/JunHoo-Lee/ACRO"
+authors:
+  - family-names: Lee
+    given-names: Junhoo
+    affiliation: Korea Advanced Institute of Science and Technology (KAIST)
+  - family-names: Kim
+    given-names: Seungyeon
+    affiliation: Seoul National University
+  - family-names: Kim
+    given-names: Baekseung
+    affiliation: Seoul National University
+  - family-names: Kim
+    given-names: Minkyu
+    affiliation: Seoul National University
+  - family-names: Jeon
+    given-names: Suhyun
+    affiliation: Seoul National University
+  - family-names: Kim
+    given-names: Jimyeong
+    affiliation: Seoul National University
+  - family-names: Kwak
+    given-names: Nojun
+    affiliation: Seoul National University

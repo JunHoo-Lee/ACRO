@@ -1,0 +1,20 @@
+\begin{wraptable}{r}{0.49\linewidth}
+\vspace{-4pt}
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{\textbf{Shortcuts reduce return cost.} Paths at $2H_{\mathrm{ref}}$: success (\%), mean return steps, and target reach (\%).}
+\label{tab:rewind-path}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Path & Success & Steps & Reach \\
+\midrule
+Reverse replay & 70.7 & 62.0 & 86.2 \\
+RDP-simplified & 70.9 & 43.4 & 80.5 \\
+Straight line & 70.7 & 20.6 & 64.1 \\
+\rowcolor{linkblue!12}
+Ours & 71.3 & 32.4 & 85.4 \\
+\bottomrule
+\end{tabular}
+\end{wraptable}

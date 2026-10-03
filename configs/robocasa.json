@@ -1,0 +1,11 @@
+{
+  "history_queries": 8,
+  "min_target_gap": 20,
+  "lookback_steps": [120, 300, null],
+  "max_interventions": 3,
+  "max_retraction_steps": 200,
+  "tube_radius": 0.02,
+  "tube_sample_spacing": 0.005,
+  "position_tolerance": 0.005,
+  "rotation_tolerance": 0.04
+}

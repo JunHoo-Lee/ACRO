@@ -1,0 +1,123 @@
+\section{Implementation Details}
+\label{app:details}
+
+This section describes the evaluation protocol, the components of ACRO, and our instantiation of the baselines. \Cref{tab:app-hparams} summarizes the hyperparameters.
+
+\subsection{Evaluation Protocol}
+\label{app:protocol}
+
+\paragraph{Matched evaluation.}
+For each trial, methods use the same task, environment seed, and policy noise seed. Budgets count physical steps, including the steps spent moving the robot during an intervention. Additional policy or VLM queries are not charged against this physical execution budget.
+
+\paragraph{SimplerEnv Bridge.}
+We use the official GR00T N1.7 SimplerEnv Bridge checkpoint and its four standard tasks. The initial configurations of each task, defined by object placement and orientation, are split into disjoint sets for Critic training, Critic validation, threshold calibration, and evaluation, in proportion $5{:}2{:}2{:}3$; all orientations of a placement fall in the same set. We evaluate on six held-out configurations per task, with ten trials per configuration (60 trials per task, 240 in total). For Eggplant in Basket, which has nine held-out configurations, we use the first six. The policy is queried every 4 steps and executes the first 4 steps of each 16-step action chunk. The budget is 300 steps, the limit of the official GR00T evaluation.
+
+\paragraph{RoboCasa.}
+We use the $\pi_{0.5}$ RoboCasa checkpoint released with LeRobot and 12 atomic tasks, evaluated on 50 environment seeds each (600 trials in total). Critic training uses a disjoint range of environment seeds. The evaluation budget $H$ is each task's registered episode limit, listed in \cref{tab:app-robocasa}. Success is evaluated from per-step task-success indicators up to $H$, including all executed recovery motion.
+
+\paragraph{Analysis and ablations.}
+The Critic and path ablations use three RoboCasa tasks, one per category: Turn On Electric Kettle, Open Stand Mixer Head, and Counter to Cabinet, each on 150 environment seeds disjoint from the Critic's (450 paired trials per variant). The reference horizon $H_{\mathrm{ref}}$ of each task is the 95th percentile of the lengths of successful Base VLA executions on the Critic's seeds, rounded up to a multiple of 50 steps (550, 500, and 850 steps), and every variant has a budget of $2H_{\mathrm{ref}}$ (1,100, 1,000, and 1,700 steps). Since a variant produces the same actions as Base VLA until its first intervention, we replay its trigger on the recorded Base VLA executions and simulate only the trials in which it fires; the other trials keep the Base VLA outcome.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{RoboCasa tasks and their registered episode limits.}
+\label{tab:app-robocasa}
+\begin{tabular}{@{}llr@{}}
+\toprule
+Category & Task & Limit (steps) \\
+\midrule
+Open/Close/Slide & Close Fridge & 1200 \\
+ & Open Cabinet & 1400 \\
+ & Open Drawer & 1000 \\
+ & Open Stand Mixer Head & 600 \\
+ & Slide Dishwasher Rack & 600 \\
+\midrule
+Pick-and-Place & Counter to Cabinet & 1000 \\
+ & Counter to Stove & 800 \\
+ & Drawer to Counter & 1000 \\
+ & Sink to Counter & 1200 \\
+ & Toaster to Counter & 800 \\
+\midrule
+Control Operation & Turn On Electric Kettle & 600 \\
+ & Turn On Sink Faucet & 800 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Critic}
+\label{app:critic}
+
+\paragraph{Data.}
+The Critic is trained on uninterrupted rollouts of the base policy: 1{,}230 on SimplerEnv (780 for training, 150 for validation, 300 for calibration) and 1{,}200 on RoboCasa (720, 180, and 300). No rollout from the evaluation placements or seeds is used.
+
+\paragraph{Architecture.}
+At each query, the input is the mean-pooled output of the VLA backbone concatenated with the robot's proprioceptive state. A linear projection with layer normalization embeds each of the last eight inputs, and a single-layer GRU summarizes them. The V head predicts the value of the current state from this summary. The Q head adds a residual, computed from the summary and a projection of the proposed action chunk, to the V prediction. Both heads output hazard rates of a piecewise-exponential survival model over the next steps, with bin edges at $\{0, 10, 25, 50, 100, 200, 400, 600\}$, so that the success probability can be read at any horizon.
+
+\paragraph{Training and selection.}
+We train with AdamW (learning rate $10^{-3}$, weight decay $10^{-3}$, batch size 32, gradient clipping at 5) on the censored negative log-likelihood of both heads, for up to 120 epochs with early stopping after 12 epochs without improvement. We train eight variants (MLP or GRU summary, width 64 or 128, input noise 0 or 0.03, two seeds) and select the one with the lowest validation likelihood loss. The selected Critic is a GRU of width 64 on SimplerEnv and of width 128 on RoboCasa. On validation rollouts, the minimum Q over a rollout separates eventual successes from failures with an AUROC of 0.94 and 0.97, respectively.
+
+\subsection{Intervention Trigger}
+\label{app:trigger}
+
+Rather than thresholding a single Q value, ACRO scores the last eight Q values with a logistic regression that predicts whether the execution will fail. The regression is fit on the validation rollouts with an L2 penalty of $10^{-3}$. Its threshold $\tau$ is set on the calibration rollouts as the $(1-\alpha)$ quantile of the maximum score reached by each successful rollout, with $\alpha = 0.2$, so that about one in five executions that would succeed raises an alarm. On the calibration rollouts, the trigger detects 76\% of failures on SimplerEnv and 85\% on RoboCasa. After an intervention, the trigger re-arms once two consecutive queries rise at least 0.02 above the threshold, or after 16 consecutive queries below it. The Critic is queried at every policy query on SimplerEnv and every 10 steps on RoboCasa.
+
+\subsection{Retraction and Re-entry}
+\label{app:retraction}
+
+\paragraph{Target selection.}
+The $k$-th intervention in an execution searches a look-back window of the executed path and moves the robot to the state with the highest predicted value in that window. The windows grow with $k$: 24 steps, 60 steps, and then the start of the execution on SimplerEnv, and 120 steps, 300 steps, and then the start on RoboCasa.
+
+\paragraph{Path.}
+Trajectory Retraction replaces the recorded end-effector path with straight segments that stay within 2\,cm of positions the robot has already visited, which removes loops and hesitations while staying in explored space. The robot follows this path with end-effector pose commands, clipped per step to 3\,cm and 0.3\,rad on SimplerEnv and to 5\,cm and 0.5\,rad on RoboCasa. The gripper keeps its last commanded state, the mobile base and torso stay fixed, and objects are not reset.
+
+\paragraph{Limits.}
+On RoboCasa, ACRO intervenes at most three times per execution, and a single retraction is capped at 200 steps. On SimplerEnv, the number of interventions is bounded only by the budget. The action queue is cleared after retraction so that the next proposal uses the reached observation.
+
+\subsection{Baselines}
+\label{app:baselines}
+
+\paragraph{Periodic rewind.}
+This baseline uses a reference horizon $H_{\mathrm{ref}}$ fixed from development rollouts. At each 10-step query, it triggers once $\lfloor H_{\mathrm{ref}}/2\rfloor$ physical steps have elapsed since the preceding return ended, or since episode start for the first return. It selects the recorded position $\lfloor H_{\mathrm{ref}}/4\rfloor$ logical forward steps back, bounded by episode start, and follows the recorded path in reverse. The intervals and offsets are fixed throughout evaluation. In the task order of \cref{tab:app-robocasa}, the intervals are 500, 500, 250, 250, 150, 425, 325, 475, 375, 325, 275, and 200 steps. Its trigger, target, and path are fixed rules, so the comparison measures the full recovery strategy. The policy weights and physical-step accounting are shared with ACRO.
+
+\paragraph{RoboMonkey.}
+At each policy query, we draw eight action chunks: the chunk that Base VLA would execute and seven more sampled with different noise seeds. The ACRO Critic scores each chunk as the Q value of executing it from the current state history, and the robot executes the chunk with the highest score. On SimplerEnv, a sampled chunk replaces the default only if its score is strictly higher. The original RoboMonkey trains a VLM-based verifier on preference data. Using our Critic instead lets RoboMonkey and ACRO rely on the same value estimates. RoboMonkey queries the policy eight times as often as Base VLA.
+
+\paragraph{CycleVLA.}
+A VLM (Qwen3.8-Flash) decomposes each instruction once into a short sequence of subtasks, using a fixed vocabulary of verbs (move, rotate, open, close, grasp, lift, place, release). We freeze these decompositions before evaluation, so every trial of a task uses the same subtasks. A change in the sign of the gripper command that persists for two steps marks the end of a subtask. At the next policy query, the VLM receives the instruction, the subtask list, and the current camera image, and returns whether the subtask succeeded and, if not, which subtask to resume from. On a failure, the robot moves back along its recorded path to the start of that subtask and the policy continues from there. Each subtask is retried at most twice and is then treated as complete. If the VLM does not return a valid answer, execution continues without intervention. Unlike the original work, we do not fine-tune the policy with a progress head, since every method keeps the base policy fixed. The SimplerEnv decompositions are: Carrot on Plate, (grasp carrot, move carrot to plate, place carrot on plate); Spoon on Towel, (grasp the spoon, place the spoon on the towel, release the spoon); and four subtasks each for Eggplant in Basket and Stack Cube.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{Hyperparameters of ACRO and the baselines.}
+\label{tab:app-hparams}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & SimplerEnv & RoboCasa \\
+\midrule
+Base policy & GR00T N1.7 & $\pi_{0.5}$ \\
+Step budget & 300 & registered limit (\cref{tab:app-robocasa}) \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Critic}} \\
+Rollouts (train / validation / calibration) & 780 / 150 / 300 & 720 / 180 / 300 \\
+Summary network & GRU, width 64 & GRU, width 128 \\
+History length & 8 queries & 8 queries \\
+Query interval & 4 steps & 10 steps \\
+Optimizer & \multicolumn{2}{c}{AdamW, lr $10^{-3}$, weight decay $10^{-3}$, batch 32} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Trigger}} \\
+History length & 8 Q values & 8 Q values \\
+$\alpha$ & 0.2 & 0.2 \\
+$\tau$ & 2.11 & 1.48 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Retraction}} \\
+Look-back windows & 24, 60, start & 120, 300, start \\
+Path tube radius & 2\,cm & 2\,cm \\
+Max.\ interventions & -- & 3 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Baselines}} \\
+RoboMonkey candidates & 8 & 8 \\
+CycleVLA VLM / retries & Qwen3.8-Flash / 2 & Qwen3.8-Flash / 2 \\
+\bottomrule
+\end{tabular}
+\end{table}

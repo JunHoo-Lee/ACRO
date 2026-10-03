@@ -1,0 +1,36 @@
+\section{Recovery Outcomes and Execution Cost at the Standard Budget}
+\label{app:recovery-timing}
+
+\paragraph{Evaluation setting.}
+This analysis uses the main RoboCasa evaluation, comprising 12 tasks and 50 trials per task. Each execution is scored at the task's registered physical-step limit $H$ in \cref{tab:app-robocasa}, including all return motion. Success is determined by the task's per-step success indicator.
+
+\paragraph{Outcome accounting.}
+ACRO completes 408 trials, Base 364, and Periodic rewind 357. Relative to Base, ACRO gains 70 successes and loses 26; Periodic gains 50 and loses 57. Thus, the net changes are $+44$ and $-7$. The ACRO comparison contains 338 shared successes and 166 shared failures.
+
+\paragraph{Timing after the first alarm.}
+ACRO initiates a return before success or cutoff in 284 trials. Of the 338 shared successes, 46 succeed in both executions after the step index of ACRO's first alarm. We use that index as the time origin and subtract all ACRO return actions before success to obtain policy execution steps. Every retry remains in the count. This gives 327.9 Base policy steps and 287.3 ACRO policy steps on average; including return motion gives 339.9 ACRO physical steps. The median paired policy-step difference is $-5$ steps. This descriptive comparison conditions on shared success after the first alarm.
+
+\begin{table}[!ht]
+\centering
+\small
+\caption{Shared successes after ACRO's first alarm at $H$. Means count every policy attempt; ACRO physical steps also include return motion.}
+\label{tab:paired-recovery}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & & \multicolumn{2}{c}{Policy steps} & Physical steps \\
+\cmidrule(lr){3-4}\cmidrule(l){5-5}
+Category & $N$ & Base & ACRO & ACRO \\
+\midrule
+Open/Close/Slide & 20 & 362.6 & 296.1 & 365.2 \\
+Pick-and-Place & 17 & 387.0 & 345.5 & 391.2 \\
+Control & 9 & 139.3 & 157.7 & 187.0 \\
+\midrule
+Overall & 46 & 327.9 & 287.3 & 339.9 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Physical execution cost.}
+Return actions count against $H$. For each return event, we intersect the interval from its first action through its last executed action with the interval before the first success or $H$. This also includes unfinished returns at the cutoff. Averaged over all 600 trials, Periodic initiates 1.04 returns and spends 92.7 steps returning; ACRO initiates 1.06 and spends 46.3 steps returning. Total executed physical steps average 553.6 for Base, 595.9 for Periodic, and 528.4 for ACRO. These totals include successes and failures; they describe physical execution, without measuring inference latency or wall-clock duration.
+
+\FloatBarrier
