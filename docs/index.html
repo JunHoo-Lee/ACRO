@@ -8,6 +8,9 @@
   <meta property="og:title" content="ACRO: Actor–Critic Rollout Orchestration">
   <meta property="og:description" content="Learn when to intervene, where to return, and how to give a fixed VLA a more promising continuation.">
   <meta property="og:type" content="website">
+  <link rel="canonical" href="https://junhoo.me/acro">
+  <meta property="og:url" content="https://junhoo.me/acro">
+  <meta property="og:image" content="https://junhoo.me/acro/assets/images/mixer-resume.png">
   <title>ACRO: Actor–Critic Rollout Orchestration</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
@@ -22,8 +25,9 @@
         <p class="eyebrow">ROBOT LEARNING · ROLLOUT ORCHESTRATION</p>
         <h1>ACRO: Actor–Critic<br>Rollout Orchestration</h1>
         <p class="dek">Give a fixed VLA a more promising continuation.</p>
-        <div id="authors" class="authors"><a href="https://junhoo-lee.com">Junhoo Lee</a><sup>2</sup>, <a href="https://seungyeon.me">Seungyeon Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Baekseung_Kim1">Baekseung Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Minkyu_Kim11">Minkyu Kim</a><sup>1</sup>, Suhyun Jeon<sup>1</sup>, <a href="https://wlaud1001.github.io/">Jimyeong Kim</a><sup>1</sup>, <a href="https://mipal.snu.ac.kr/">Nojun Kwak</a><sup>1</sup><div class="affiliations"><sup>1</sup> Seoul National University &nbsp; <sup>2</sup> KAIST</div></div>
+        <div id="authors" class="authors"><a href="https://junhoo.me">Junhoo Lee</a><sup>2</sup>, <a href="https://seungyeon.me">Seungyeon Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Baekseung_Kim1">Baekseung Kim</a><sup>1</sup>, <a href="https://openreview.net/profile?id=~Minkyu_Kim11">Minkyu Kim</a><sup>1</sup>, Suhyun Jeon<sup>1</sup>, <a href="https://wlaud1001.github.io/">Jimyeong Kim</a><sup>1</sup>, <a href="https://mipal.snu.ac.kr/">Nojun Kwak</a><sup>1</sup><div class="affiliations"><sup>1</sup> Seoul National University &nbsp; <sup>2</sup> KAIST</div></div>
         <div class="resource-links">
+          <a href="https://junhoo.me">Homepage</a>
           <a href="https://github.com/JunHoo-Lee/ACRO">Code</a>
           <a href="assets/paper/acro-preprint.pdf" id="paper-link">Paper</a>
           <a href="assets/paper/acro-preprint-source.zip">LaTeX source</a>
@@ -86,7 +90,7 @@
           <p class="lead">When should a robot keep going—and when should it try a different approach?</p>
           <p>A vision-language-action policy can succeed from some configurations and struggle from others. During an execution, continuing the current attempt is only one way to use that policy. A robot can also return to a useful point along its path and start a new continuation.</p>
           <p><strong>ACRO</strong> makes this decision for a fixed VLA. It estimates success prospects, chooses a promising re-entry state, and physically returns the robot there. The same policy then resumes from a fresh observation.</p>
-          <p>Across SimplerEnv, RoboCasa, and real-robot manipulation, ACRO improves task success under the same physical execution budget, including every return step.</p>
+          <p>Across SimplerEnv and RoboCasa, ACRO improves task success under the same physical execution budget, including every return step.</p>
         </div>
 
         <section id="why" class="article-section">
@@ -111,14 +115,13 @@
           <div class="section-title"><span>3.</span><h2>The execution loop</h2></div>
           <div class="pipeline" aria-label="Four stages of ACRO"><div><span>01</span><h3>Propose</h3><p>The fixed VLA proposes an action chunk from the current observation.</p></div><div><span>02</span><h3>Assess</h3><p>The Critic estimates continuation prospects and monitors recent Q values.</p></div><div><span>03</span><h3>Return</h3><p>If intervention activates, select a historical state and physically retract.</p></div><div><span>04</span><h3>Resume</h3><p>Clear the action queue and query the same VLA from the reached observation.</p></div></div>
           <p>Every policy action and return action counts toward the same physical step limit. The process can repeat while the execution has time remaining.</p>
-          <figure class="figure-box"><img src="assets/figures/real-robot.png" alt="Franka Panda performing pick and place, cube stacking, and button pressing" loading="lazy"><figcaption>Real-robot evaluation on pick and place, cube stacking, and button pressing.</figcaption></figure>
         </section>
 
         <section id="results" class="article-section">
           <div class="section-title"><span>4.</span><h2>Results</h2></div>
           <p>ACRO is evaluated with GR00T N1.7 and π<sub>0.5</sub>. Within each setting, the base policy stays fixed and all methods receive the same physical execution budget, including recovery motion.</p>
-          <div class="highlights"><div><span>SIMPLERENV</span><strong>+10.4<small> pp</small></strong><p>49.6% → 60.0%</p></div><div><span>ROBOCASA</span><strong>+7.3<small> pp</small></strong><p>60.7% → 68.0%</p></div><div><span>REAL ROBOT</span><strong>+21.7<small> pp</small></strong><p>43.3% → 65.0%</p></div></div>
-          <div class="result-switch" role="tablist" aria-label="Evaluation environment"><button role="tab" id="tab-simpler" aria-selected="true" aria-controls="result-panel" data-result="simpler">SimplerEnv</button><button role="tab" id="tab-robocasa" aria-selected="false" aria-controls="result-panel" data-result="robocasa" tabindex="-1">RoboCasa</button><button role="tab" id="tab-real" aria-selected="false" aria-controls="result-panel" data-result="real" tabindex="-1">Real robot</button></div>
+          <div class="highlights"><div><span>SIMPLERENV</span><strong>+10.4<small> pp</small></strong><p>49.6% → 60.0%</p></div><div><span>ROBOCASA</span><strong>+7.3<small> pp</small></strong><p>60.7% → 68.0%</p></div></div>
+          <div class="result-switch" role="tablist" aria-label="Evaluation environment"><button role="tab" id="tab-simpler" aria-selected="true" aria-controls="result-panel" data-result="simpler">SimplerEnv</button><button role="tab" id="tab-robocasa" aria-selected="false" aria-controls="result-panel" data-result="robocasa" tabindex="-1">RoboCasa</button></div>
           <div id="result-panel" role="tabpanel" aria-labelledby="tab-simpler" tabindex="0">
             <div class="result-header"><h3 id="result-title">GR00T N1.7 · SimplerEnv Bridge</h3><span>TASK SUCCESS (%)</span></div>
             <div class="table-scroll"><table id="result-table"><caption class="sr-only">Task success rates</caption><thead></thead><tbody></tbody></table></div>
@@ -143,7 +146,7 @@
   title = {{ACRO}: Actor--Critic Rollout Orchestration},
   author = {Lee, Junhoo and Kim, Seungyeon and Kim, Baekseung and Kim, Minkyu and Jeon, Suhyun and Kim, Jimyeong and Kwak, Nojun},
   year = {2026},
-  url = {https://junhoo-lee.github.io/ACRO/}
+  url = {https://junhoo.me/acro}
 }</pre></div><p id="copy-status" class="sr-only" role="status"></p></section>
       </main>
     </div>

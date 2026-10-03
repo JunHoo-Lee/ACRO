@@ -4,7 +4,7 @@ title: "ACRO: Actor–Critic Rollout Orchestration"
 type: software
 version: 0.1.0
 date-released: 2026-10-04
-url: "https://junhoo-lee.github.io/ACRO/"
+url: "https://junhoo.me/acro"
 repository-code: "https://github.com/JunHoo-Lee/ACRO"
 authors:
   - family-names: Lee

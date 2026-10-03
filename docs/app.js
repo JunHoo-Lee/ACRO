@@ -14,13 +14,6 @@ const datasets = {
     rows: [['Open / Close / Slide',64.4,66.8,65.6,76],['Pick and Place',64,68,56,65.2],['Control Operation',43,52,40,55]],
     overall: ['Overall',60.7,64.8,57.3,68],
     note: 'Each task’s registered physical step limit, including return motion. †Adapted baselines use the same frozen policy; implementation details are in the paper.'
-  },
-  real: {
-    title: 'π₀.₅ · Franka Panda',
-    columns: ['Task', 'Base', 'ACRO'],
-    rows: [['Pick and Place',70,80],['Stack Cube',20,55],['Press Button',40,60]],
-    overall: ['Overall',43.3,65],
-    note: 'Pick and place, cube stacking, and button pressing with a fixed π₀.₅ policy. Physical return motion is included in the execution budget.'
   }
 };
 

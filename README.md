@@ -1,6 +1,6 @@
 # ACRO: Actor–Critic Rollout Orchestration
 
-[Project page](https://junhoo-lee.github.io/ACRO/) · [Paper](https://junhoo-lee.github.io/ACRO/assets/paper/acro-preprint.pdf) · [LaTeX source](paper/)
+[Project page](https://junhoo.me/acro) · [Paper](https://junhoo.me/acro/assets/paper/acro-preprint.pdf) · [LaTeX source](paper/)
 
 Junhoo Lee², Seungyeon Kim¹, Baekseung Kim¹, Minkyu Kim¹, Suhyun Jeon¹, Jimyeong Kim¹, Nojun Kwak¹
 
