@@ -2,9 +2,9 @@
 
 [Project page](https://junhoo.me/acro) · [Paper](https://junhoo.me/acro/assets/paper/acro-preprint.pdf) · [LaTeX source](paper/)
 
-Junhoo Lee², Seungyeon Kim¹, Baekseung Kim¹, Minkyu Kim¹, Suhyun Jeon¹, Jimyeong Kim¹, Nojun Kwak¹
+Junhoo Lee¹, Seungyeon Kim², Baekseung Kim², Minkyu Kim², Suhyun Jeon², Jimyeong Kim², Nojun Kwak²
 
-¹ Seoul National University · ² KAIST
+¹ KAIST · ² Seoul National University
 
 ACRO is a recovery layer for a fixed vision-language-action policy. A learned Critic estimates when to intervene and where to resume. Trajectory Retraction returns the robot to a useful configuration along its visited path, and the same VLA continues from a fresh observation.
 

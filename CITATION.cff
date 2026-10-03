@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "Please cite the ACRO preprint when using this work."
 title: "ACRO: Actor–Critic Rollout Orchestration"
 type: software
-version: 0.1.0
+version: 0.1.1
 date-released: 2026-10-04
 url: "https://junhoo.me/acro"
 repository-code: "https://github.com/JunHoo-Lee/ACRO"
